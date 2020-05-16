@@ -24,6 +24,9 @@ import (
 	"time"
 )
 
+var version string = "DEV"
+var date string
+
 func main() {
 	err := main2()
 	if err != nil {
@@ -289,6 +292,7 @@ func main2() error {
 	var caCert = flag.String("ca-cert", "minica.pem", "Root certificate filename, PEM encoded.")
 	var domains = flag.String("domains", "", "Comma separated domain names to include as Server Alternative Names.")
 	var ipAddresses = flag.String("ip-addresses", "", "Comma separated IP addresses to include as Server Alternative Names.")
+	var version = flag.Bool("version", false, "display version")
 	flag.Usage = func() {
 		fmt.Fprintf(os.Stderr, "Usage of %s:\n", os.Args[0])
 		fmt.Fprintf(os.Stderr, `
@@ -313,6 +317,10 @@ will not overwrite existing keys or certificates.
 		flag.PrintDefaults()
 	}
 	flag.Parse()
+	if *version {
+		fmt.Println("Version: " + version + " (built on " + date + ")")
+		return nil
+	}
 	if *domains == "" && *ipAddresses == "" {
 		flag.Usage()
 		os.Exit(1)
