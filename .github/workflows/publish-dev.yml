@@ -50,6 +50,12 @@ jobs:
           docker tag ghcr.io/${{ github.repository }}:v0.0.0-amd64 \
                     ghcr.io/${{ github.repository }}:dev-${{ steps.sanitize_branch.outputs.sanitized_branch }}-amd64
           docker push ghcr.io/${{ github.repository }}:dev-${{ steps.sanitize_branch.outputs.sanitized_branch }}-amd64
+          docker tag ghcr.io/${{ github.repository }}:v0.0.0-alpine-arm64 \
+                    ghcr.io/${{ github.repository }}:dev-${{ steps.sanitize_branch.outputs.sanitized_branch }}-alpine-arm64
+          docker push ghcr.io/${{ github.repository }}:dev-${{ steps.sanitize_branch.outputs.sanitized_branch }}-alpine-arm64
+          docker tag ghcr.io/${{ github.repository }}:v0.0.0-alpine-amd64 \
+                    ghcr.io/${{ github.repository }}:dev-${{ steps.sanitize_branch.outputs.sanitized_branch }}-alpine-amd64
+          docker push ghcr.io/${{ github.repository }}:dev-${{ steps.sanitize_branch.outputs.sanitized_branch }}-alpine-amd64
 
       - name: Create and push manifest for branch tag
         if: startsWith(github.head_ref, 'dev/')
@@ -58,9 +64,14 @@ jobs:
                                  ghcr.io/${{ github.repository }}:dev-${{ steps.sanitize_branch.outputs.sanitized_branch }}-arm64 \
                                  ghcr.io/${{ github.repository }}:dev-${{ steps.sanitize_branch.outputs.sanitized_branch }}-amd64
           docker manifest push ghcr.io/${{ github.repository }}:dev-${{ steps.sanitize_branch.outputs.sanitized_branch }}
+          docker manifest create ghcr.io/${{ github.repository }}:dev-${{ steps.sanitize_branch.outputs.sanitized_branch }}-alpine \
+                                 ghcr.io/${{ github.repository }}:dev-${{ steps.sanitize_branch.outputs.sanitized_branch }}-alpine-arm64 \
+                                 ghcr.io/${{ github.repository }}:dev-${{ steps.sanitize_branch.outputs.sanitized_branch }}-alpine-amd64
+          docker manifest push ghcr.io/${{ github.repository }}:dev-${{ steps.sanitize_branch.outputs.sanitized_branch }}-alpine
 
       - name: Show summary
         if: startsWith(github.head_ref, 'dev/')
         run: |
           echo 'Published:  ' >> ${GITHUB_STEP_SUMMARY}
           echo '* `ghcr.io/${{ github.repository }}:dev-${{ steps.sanitize_branch.outputs.sanitized_branch }}`' >> ${GITHUB_STEP_SUMMARY}
+          echo '* `ghcr.io/${{ github.repository }}:dev-${{ steps.sanitize_branch.outputs.sanitized_branch }}-alpine`' >> ${GITHUB_STEP_SUMMARY}

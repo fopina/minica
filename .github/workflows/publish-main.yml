@@ -34,3 +34,5 @@ jobs:
           echo 'Published:  ' >> ${GITHUB_STEP_SUMMARY}
           echo '* `ghcr.io/${{ github.repository }}:${{ github.ref_name }}`' >> ${GITHUB_STEP_SUMMARY}
           echo '* `ghcr.io/${{ github.repository }}:latest`' >> ${GITHUB_STEP_SUMMARY}
+          echo '* `ghcr.io/${{ github.repository }}:${{ github.ref_name }}-alpine`' >> ${GITHUB_STEP_SUMMARY}
+          echo '* `ghcr.io/${{ github.repository }}:alpine`' >> ${GITHUB_STEP_SUMMARY}

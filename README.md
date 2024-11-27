@@ -1,3 +1,16 @@
+# minica
+
+[![goreference](https://pkg.go.dev/badge/github.com/fopina/minica.svg)](https://pkg.go.dev/github.com/fopina/minica)
+[![release](https://img.shields.io/github/v/release/fopina/golang-template)](https://github.com/fopina/minica/releases)
+[![downloads](https://img.shields.io/github/downloads/fopina/golang-template/total.svg)](https://github.com/fopina/minica/releases)
+[![ci](https://github.com/fopina/minica/actions/workflows/publish-main.yml/badge.svg)](https://github.com/fopina/minica/actions/workflows/publish-main.yml)
+[![test](https://github.com/fopina/minica/actions/workflows/test.yml/badge.svg)](https://github.com/fopina/minica/actions/workflows/test.yml)
+[![codecov](https://codecov.io/github/fopina/minica/graph/badge.svg)](https://codecov.io/github/fopina/minica)
+
+> **NOTE**  
+> This is a fork from [jsha/minica](https://github.com/jsha/minica).  
+> This was only detached as PRs were not getting any reactions - but all credits go to [@jsha](https://github.com/jsha)
+
 Minica is a simple CA intended for use in situations where the CA operator
 also operates each host where a certificate will be used. It automatically
 generates both a key and a certificate when asked to produce a certificate.

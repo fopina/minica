@@ -65,6 +65,35 @@ dockers:
   - "--label=org.opencontainers.image.source={{.GitURL}}"
   - "--platform=linux/arm64"
   goarch: arm64
+- image_templates:
+  - 'ghcr.io/fopina/{{.ProjectName}}:{{ .Tag }}-alpine-amd64'
+  dockerfile: Dockerfile
+  use: buildx
+  build_flag_templates:
+  - "--target=alpine"
+  - "--pull"
+  - "--label=io.artifacthub.package.license=MIT"
+  - "--label=org.opencontainers.image.created={{.Date}}"
+  - "--label=org.opencontainers.image.name={{.ProjectName}}"
+  - "--label=org.opencontainers.image.revision={{.FullCommit}}"
+  - "--label=org.opencontainers.image.version={{.Version}}"
+  - "--label=org.opencontainers.image.source={{.GitURL}}"
+  - "--platform=linux/amd64"
+- image_templates:
+  - 'ghcr.io/fopina/{{.ProjectName}}:{{ .Tag }}-alpine-arm64'
+  dockerfile:  Dockerfile
+  use: buildx
+  build_flag_templates:
+  - "--target=alpine"
+  - "--pull"
+  - "--label=io.artifacthub.package.license=MIT"
+  - "--label=org.opencontainers.image.created={{.Date}}"
+  - "--label=org.opencontainers.image.name={{.ProjectName}}"
+  - "--label=org.opencontainers.image.revision={{.FullCommit}}"
+  - "--label=org.opencontainers.image.version={{.Version}}"
+  - "--label=org.opencontainers.image.source={{.GitURL}}"
+  - "--platform=linux/arm64"
+  goarch: arm64
 
 docker_manifests:
 - name_template: 'ghcr.io/fopina/{{.ProjectName}}:{{ .Tag }}'
@@ -75,3 +104,11 @@ docker_manifests:
   image_templates:
   - 'ghcr.io/fopina/{{.ProjectName}}:{{ .Tag }}-amd64'
   - 'ghcr.io/fopina/{{.ProjectName}}:{{ .Tag }}-arm64'
+- name_template: 'ghcr.io/fopina/{{.ProjectName}}:{{ .Tag }}-alpine'
+  image_templates:
+  - 'ghcr.io/fopina/{{.ProjectName}}:{{ .Tag }}-alpine-amd64'
+  - 'ghcr.io/fopina/{{.ProjectName}}:{{ .Tag }}-alpine-arm64'
+- name_template: 'ghcr.io/fopina/{{.ProjectName}}:alpine'
+  image_templates:
+  - 'ghcr.io/fopina/{{.ProjectName}}:{{ .Tag }}-alpine-amd64'
+  - 'ghcr.io/fopina/{{.ProjectName}}:{{ .Tag }}-alpine-arm64'
