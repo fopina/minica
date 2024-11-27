@@ -351,32 +351,28 @@ will not overwrite existing keys or certificates.
 	flag.Parse()
 	if *domains == "" && *ipAddresses == "" {
 		flag.Usage()
-		os.Exit(1)
+		return fmt.Errorf("missing args")
 	}
 	alg := x509.RSA
 	if strings.ToLower(*caAlg) == "ecdsa" {
 		alg = x509.ECDSA
 	} else if strings.ToLower(*caAlg) != "rsa" {
-		fmt.Printf("Unrecognized algorithm: %s (use RSA or ECDSA)\n", *caAlg)
-		os.Exit(1)
+		return fmt.Errorf("unrecognized algorithm: %s (use RSA or ECDSA)", *caAlg)
 	}
 	if len(flag.Args()) > 0 {
-		fmt.Printf("Extra arguments: %s (maybe there are spaces in your domain list?)\n", flag.Args())
-		os.Exit(1)
+		return fmt.Errorf("extra arguments: %s (maybe there are spaces in your domain list?)", flag.Args())
 	}
 	domainSlice := split(*domains)
 	domainRe := regexp.MustCompile("^[A-Za-z0-9.*-]+$")
 	for _, d := range domainSlice {
 		if !domainRe.MatchString(d) {
-			fmt.Printf("Invalid domain name %q\n", d)
-			os.Exit(1)
+			return fmt.Errorf("invalid domain name %q", d)
 		}
 	}
 	ipSlice := split(*ipAddresses)
 	for _, ip := range ipSlice {
 		if net.ParseIP(ip) == nil {
-			fmt.Printf("Invalid IP address %q\n", ip)
-			os.Exit(1)
+			return fmt.Errorf("invalid IP address %q", ip)
 		}
 	}
 	issuer, err := getIssuer(*caKey, *caCert, alg, *caCommonName)
